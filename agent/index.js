@@ -16,6 +16,8 @@ const getUsername = () => userInfo().username
 
 const getPlainNetworkInterfaces = nics => nics.reduce((acc, curr) => [...acc, ...curr], [])
 
+socket.emit('agent_data', getAgentData())
+
 socket.on('get_agent_data', () => {
   socket.emit('agent_data', getAgentData())
 })
