@@ -1,5 +1,12 @@
+import dotenv from 'dotenv'
 import io from 'socket.io-client'
 import { networkInterfaces, userInfo } from 'os'
+
+const env = dotenv.config()
+
+if (env.error) {
+  throw result.error
+}
 
 const socket = io(process.env.SOCKET_ADDR)
 
