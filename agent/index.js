@@ -1,30 +1,11 @@
-import dotenv from 'dotenv'
-import io from 'socket.io-client'
-import { networkInterfaces, userInfo } from 'os'
+import { loadEnv } from './env'
+import { initSocket, sendData, socketEvents } from './socket'
+import { getAgentData } from './utils'
 
-const env = dotenv.config()
+loadEnv().then(({ SOCKET_ADDR }) => initSocket(SOCKET_ADDR))
+  .then(socket => sendData(socket, 'agent_data', getAgentData()))
+  .then(socket => {
+    const { dataCollection } = socketEvents
 
-if (env.error) {
-  throw result.error
-}
-
-const socket = io(process.env.SOCKET_ADDR)
-
-const getIpAddresses = () => getPlainNetworkInterfaces(Object.values(networkInterfaces()))
-  .filter(({ family, internal }) => family === 'IPv4' && !internal)
-  .map(({ address }) => address)
-
-const getAgentData = () => ({
-  ip_addresses: getIpAddresses(),
-  username: getUsername(),
-})
-
-const getUsername = () => userInfo().username
-
-const getPlainNetworkInterfaces = nics => nics.reduce((acc, curr) => [...acc, ...curr], [])
-
-socket.emit('agent_data', getAgentData())
-
-socket.on('get_agent_data', () => {
-  socket.emit('agent_data', getAgentData())
-})
+    dataCollection(socket, getAgentData)
+  }).catch(console.error)
