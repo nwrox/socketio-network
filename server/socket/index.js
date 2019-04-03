@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+import { registerEvents } from './events'
 import io from 'socket.io'
 
 export const socketPlugin = {
@@ -6,11 +8,11 @@ export const socketPlugin = {
     const socket = io(server.listener)
 
     socket.on('connection', client => {
-      console.log(`connection from ${client.id}`)
+      const date = dayjs().format('YYYY/MM/DD HH:mm:ss')
 
-      client.on('agent_data', data => {
-        console.log(data)
-      })
+      console.log(`connectclientn from ${client.id} @ ${date}`)
+
+      registerEvents(client, socket)
     })
 
     server.expose({ socket })

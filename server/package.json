@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dayjs": "^1.8.12",
     "hapi": "^18.1.0",
     "socket.io": "^2.2.0"
   },

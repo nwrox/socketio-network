@@ -6,7 +6,7 @@ const initServer = server => server.start()
 const registerPlugins = server => server.register(socketPlugin)
 
 const server = Hapi.server({
-  host: 'localhost',
+  host: '0.0.0.0',
   port: 3000
 })
 
