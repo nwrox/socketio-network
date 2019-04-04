@@ -1,7 +1,6 @@
 import Hapi from 'hapi'
 import { socketPlugin } from './socket'
 import { loadEnv } from './utils'
-import { getAll } from './data/session'
 
 const initServer = server => server.start()
 
@@ -20,8 +19,6 @@ loadEnv().then(() => registerPlugins(server))
         uri: serverInfo
       }
     } = server
-
-    getAll()
 
     console.log(`Server running at: ${serverInfo}`)
 }).catch(console.error)

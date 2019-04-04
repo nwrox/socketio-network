@@ -9,3 +9,6 @@ export const loadEnv = () => new Promise((resolve, reject) => {
 
   resolve(parsed)
 })
+
+// min c# date
+export const minDate = () => new Date(1, 1, 1, 12).toISOString()
