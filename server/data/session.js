@@ -45,8 +45,7 @@ export const getAll = (currPage = 1, perPage = 10) => {
     console.log(total, rows)
   }).catch(err => {
     throw err
-  })
-  .finally(() => {
+  }).finally(() => {
     db.destroy()
   })
 }
@@ -57,29 +56,29 @@ export const getLastBy = (login, ip) => {
 
   // c# --> 0 == false && 1 == true
   return db.from(SESSION_DB_TABLE)
-  .select('*')
-  .where({
-    login,
-    ip,
-    eh_sessao_web: 0
-  })
-  .whereNull('dt_logout')
-  .orWhere({
-    dt_logout: minDate()
-  })
-  .whereNull('dt_desativacao')
-  .orWhere({
-    dt_desativacao: minDate()
-  })
-  .orderBy('dt_login', 'desc')
-  .first()
-  .then(row => row)
-  .catch(err => {
-    throw err
-  })
-  .finally(() => {
-    db.destroy()
-  })
+    .select('*')
+    .where({
+      login,
+      ip,
+      eh_sessao_web: 0
+    })
+    .whereNull('dt_logout')
+    .orWhere({
+      dt_logout: minDate()
+    })
+    .whereNull('dt_desativacao')
+    .orWhere({
+      dt_desativacao: minDate()
+    })
+    .orderBy('dt_login', 'desc')
+    .first()
+    .then(row => row)
+    .catch(err => {
+      throw err
+    })
+    .finally(() => {
+      db.destroy()
+    })
 }
 
 export const save = session => {
@@ -89,7 +88,7 @@ export const save = session => {
   db.insert(session)
     .into(SESSION_DB_TABLE)
     .catch(err => {
-      throw errr
+      throw err
     })
     .finally(() => {
       db.destroy()

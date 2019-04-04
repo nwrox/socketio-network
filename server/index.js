@@ -21,7 +21,7 @@ loadEnv().then(() => registerPlugins(server))
     } = server
 
     console.log(`Server running at: ${serverInfo}`)
-}).catch(console.error)
+  }).catch(console.error)
 
 process.on('unhandledRejection', err => {
   console.log(err)

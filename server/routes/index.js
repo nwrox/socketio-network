@@ -1,6 +1,6 @@
 export const buildRoutes = server => {}
 
-const routes = []
+// const routes = []
 
 // socket.broadcast
 //   .emit('get_agent_data', '')
