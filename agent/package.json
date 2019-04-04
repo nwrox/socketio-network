@@ -10,7 +10,7 @@
   "scripts": {
     "build": "rm -rf dist && mkdir dist && babel index.js -o ./dist/index.js",
     "dev": "nodemon --exec babel-node index.js",
-    "lint": "npx eslint --ignore-path --ext .js .",
+    "lint": "eslint **/*.js --ignore-path .gitignore",
     "package": "npm run build && pkg ./dist/index.js --out-path ./dist -t node8-win-x64 && cp .env start.bat ./dist"
   },
   "keywords": [],

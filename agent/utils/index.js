@@ -7,7 +7,7 @@ const getIpAddresses = () => getPlainNetworkInterfaces(Object.values(networkInte
 
 export const getAgentData = () => ({
   ip_addresses: getIpAddresses(),
-  username: getUsername(),
+  username: getUsername()
 })
 
 const getUsername = () => userInfo().username
