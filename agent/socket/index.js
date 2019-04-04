@@ -11,7 +11,7 @@ export const sendData = (socket, evt, data) => {
 export const socketEvents = {
   dataCollection: (socket, getData) => {
     socket.on('get_agent_data', () => {
-      sendData(socket, 'agent_data', data)
+      sendData(socket, 'agent_data', getData())
     })
   }
 }

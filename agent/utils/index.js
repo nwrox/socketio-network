@@ -1,3 +1,4 @@
+import dotenv from 'dotenv'
 import { networkInterfaces, userInfo } from 'os'
 
 const getIpAddresses = () => getPlainNetworkInterfaces(Object.values(networkInterfaces()))
@@ -12,3 +13,13 @@ export const getAgentData = () => ({
 const getUsername = () => userInfo().username
 
 const getPlainNetworkInterfaces = nics => nics.reduce((acc, curr) => [...acc, ...curr], [])
+
+export const loadEnv = () => new Promise((resolve, reject) => {
+  const { error, parsed } = dotenv.config()
+
+  if (error) {
+    reject(error)
+  }
+
+  resolve(parsed)
+})
