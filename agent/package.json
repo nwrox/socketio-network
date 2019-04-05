@@ -3,15 +3,25 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
-  "bin": "index.js",
-  "assets": [
-    ".env"
-  ],
+  "bin": "build/index.js",
+  "pkg": {
+    "assets": [
+      ".env"
+    ],
+    "scripts": [
+      "build/socket.js",
+      "build/utils.js"
+    ]
+  },
   "scripts": {
-    "build": "rm -rf dist && mkdir dist && babel index.js -o ./dist/index.js",
+    "build": "npm run build-index && npm run build-socket && npm run build-utils",
+    "build-index": "babel index.js -o ./build/index.js",
+    "build-socket": "babel socket -o ./build/socket.js",
+    "build-utils": "babel utils -o ./build/utils.js",
+    "clean": "rm -rf build dist && mkdir build dist",
     "dev": "nodemon --exec babel-node index.js",
     "lint": "eslint **/*.js --ignore-path .gitignore",
-    "package": "npm run build && pkg ./dist/index.js --out-path ./dist -t node8-win-x64 && cp .env start.bat ./dist"
+    "pack": "npm run clean && npm run build && pkg . --out-path ./dist -t node8-win-x64"
   },
   "keywords": [],
   "author": "",
