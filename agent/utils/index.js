@@ -11,13 +11,21 @@ export const getAgentData = () => ({
   username: getUsername()
 })
 
+const getEnvPath = () => {
+  const { NODE_ENV } = process.env
+
+  return NODE_ENV !== 'development'
+    ? path.resolve(__dirname, '../.env')
+    : path.resolve(process.cwd(), '.env')
+}
+
 const getUsername = () => userInfo().username
 
 const getPlainNetworkInterfaces = nics => nics.reduce((acc, curr) => [...acc, ...curr], [])
 
 export const loadEnv = () => new Promise((resolve, reject) => {
   const { error, parsed } = dotenv.config({
-    path: path.resolve(__dirname, '../.env')
+    path: getEnvPath()
   })
 
   if (error) {
