@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import { registerEvents } from './events'
 import io from 'socket.io'
+import { currDate } from '../utils'
 
 export const socketPlugin = {
   name: 'socketioPlugin',
@@ -8,9 +9,9 @@ export const socketPlugin = {
     const socket = io(server.listener)
 
     socket.on('connection', client => {
-      const date = dayjs().format('YYYY/MM/DD HH:mm:ss')
+      const date = dayjs(currDate()).format('YYYY/MM/DD HH:mm:ss')
 
-      console.log(`connectclientn from ${client.id} @ ${date}`)
+      console.log(`Client "${client.id}" connected @ ${date}`)
 
       registerEvents(client, socket)
     })

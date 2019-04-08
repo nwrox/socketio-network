@@ -1,5 +1,9 @@
 import dotenv from 'dotenv'
 
+export const currDate = () => new Date().toLocaleString('pt-BR', {
+  timeZone: 'America/Sao_Paulo'
+})
+
 export const loadEnv = () => new Promise((resolve, reject) => {
   const { error, parsed } = dotenv.config()
 
