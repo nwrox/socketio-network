@@ -1,8 +1,17 @@
 import dotenv from 'dotenv'
+import ip from 'ip'
 
 export const currDate = () => new Date().toLocaleString('pt-BR', {
   timeZone: 'America/Sao_Paulo'
 })
+
+export const filterIpInRange = ipArr => {
+  const { NETWORK_RANGE } = process.env
+
+  return ipArr.filter(i => ip.cidrSubnet(NETWORK_RANGE)
+    .contains(i)
+  )[0]
+}
 
 export const loadEnv = () => new Promise((resolve, reject) => {
   const { error, parsed } = dotenv.config()
@@ -14,5 +23,4 @@ export const loadEnv = () => new Promise((resolve, reject) => {
   resolve(parsed)
 })
 
-// min c# date
-export const minDate = () => new Date(1, 1, 1, 12).toISOString()
+export const minDate = () => new Date(1, 0, 1, 12).toISOString()
