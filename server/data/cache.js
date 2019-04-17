@@ -23,19 +23,20 @@ export const cache = {
       client.quit()
     })
   },
-  save: (ip, data) => {
+  save: (key, data) => {
     const client = initClient()
 
-    client.set(`${ip}`, JSON.stringify(data), redis.print)
+    client.set(`${key}`, JSON.stringify(data), redis.print)
 
     client.quit()
   }
 }
 
 const initClient = () => {
+  const { REDIS_PORT, REDIS_HOST } = process.env
   const client = redis.createClient({
-    host: '10.164.96.193',
-    port: 16380
+    host: REDIS_HOST,
+    port: REDIS_PORT
   })
 
   client.on('error', err => {

@@ -20,15 +20,24 @@ export const registerEvents = (client, socket) => {
 
     cache.getBy(ip)
       .then(({ clientId }) => {
-        console.log(clientId)
+        if (clientId) {
+          clients[`${clientId}`].disconnect(true)
+        }
 
-        clients[`${clientId}`].disconnect(true)
         clients[`${client.id}`].disconnect(true)
       })
       .catch(console.error)
   })
 
   client.on('disconnect', reason => {
+    const {
+      handshake: { address }
+    } = client
+
+    if (address) {
+      cache.del(address)
+    }
+
     console.log(`Client "${client.id}" disconnected: Reason "${reason}"`)
   })
 }
