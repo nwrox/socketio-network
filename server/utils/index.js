@@ -23,4 +23,4 @@ export const loadEnv = () => new Promise((resolve, reject) => {
   resolve(parsed)
 })
 
-export const minDate = () => new Date(1, 0, 1, 12).toISOString()
+export const minDate = () => new Date('0001-01-01').toISOString()

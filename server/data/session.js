@@ -50,7 +50,7 @@ export const getAll = (currPage = 1, perPage = 10) => {
   })
 }
 
-export const getLastBy = (login, ip) => {
+export const getLastBy = (login, ip, ehSessaoWeb) => {
   const db = knex()
   const { SESSION_DB_TABLE } = process.env
 
@@ -60,15 +60,15 @@ export const getLastBy = (login, ip) => {
     .where({
       login,
       ip,
-      eh_sessao_web: 0
+      eh_sessao_web: ehSessaoWeb
     })
-    .whereNull('dt_logout')
-    .orWhere({
-      dt_logout: minDate()
+    .andWhere(builder => {
+      builder.where({ dt_logout: minDate() })
+        .orWhereNull('dt_logout')
     })
-    .whereNull('dt_desativacao')
-    .orWhere({
-      dt_desativacao: minDate()
+    .andWhere(builder => {
+      builder.where({ dt_desativacao: minDate() })
+        .orWhereNull('dt_desativacao')
     })
     .orderBy('dt_login', 'desc')
     .first()
