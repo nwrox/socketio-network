@@ -1,4 +1,5 @@
 import Hapi from 'hapi'
+import { buildRoutes } from './routes'
 import { socketPlugin } from './socket'
 import { loadEnv } from './utils'
 
@@ -10,6 +11,8 @@ const server = Hapi.server({
   host: '0.0.0.0',
   port: 3000
 })
+
+buildRoutes(server)
 
 loadEnv().then(() => registerPlugins(server))
   .then(() => initServer(server))
