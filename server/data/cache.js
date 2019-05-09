@@ -25,8 +25,11 @@ export const cache = {
   },
   save: (key, data) => {
     const client = initClient()
+    const value = typeof data !== 'string'
+      ? JSON.stringify(data)
+      : data
 
-    client.set(`${key}`, JSON.stringify(data), redis.print)
+    client.set(`${key}`, value, () => {})
 
     client.quit()
   }
@@ -40,7 +43,7 @@ const initClient = () => {
   })
 
   client.on('error', err => {
-    console.log(`Error: ${err}`)
+    console.log(`Cache error: ${err}`)
   })
 
   return client
