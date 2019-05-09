@@ -2,14 +2,12 @@ import dotenv from 'dotenv'
 import { networkInterfaces, userInfo } from 'os'
 import path from 'path'
 
-const getIpAddresses = () => getPlainNetworkInterfaces(networkInterfaces())
-  .filter(({ family, internal }) => family === 'IPv4' && !internal)
-  .map(({ address }) => address)
-
-export const getAgentData = () => ({
-  ip_addresses: getIpAddresses(),
-  username: getUsername()
-})
+export const getAgentData = () => {
+  return ({
+    nicInfo: getNicInfo(),
+    username: getUsername()
+  })
+}
 
 const getEnvPath = () => {
   const { NODE_ENV } = process.env
@@ -19,10 +17,14 @@ const getEnvPath = () => {
     : path.resolve(process.cwd(), '.env')
 }
 
-const getUsername = () => userInfo().username
+const getNicInfo = () => getPlainNetworkInterfaces(networkInterfaces())
+  .filter(({ family, internal }) => family === 'IPv4' && !internal)
+  .map(({ address, mac }) => ({ address, mac }))
 
 const getPlainNetworkInterfaces = nics => Object.values(nics)
   .reduce((acc, curr) => [...acc, ...curr], [])
+
+const getUsername = () => userInfo().username
 
 export const loadEnv = () => new Promise((resolve, reject) => {
   const { error, parsed } = dotenv.config({

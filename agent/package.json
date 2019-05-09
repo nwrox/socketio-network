@@ -15,7 +15,7 @@
   "scripts": {
     "build": "babel src -d ./build",
     "clean": "rm -rf build dist && mkdir build dist",
-    "dev": "npx cross-env NODE_ENV=development nodemon --exec babel-node index.js",
+    "dev": "npx cross-env NODE_ENV=development nodemon --exec babel-node src/index.js",
     "lint": "eslint **/*.js --ignore-path .gitignore",
     "pack": "npm run clean && npm run build && pkg . --out-path ./dist -t node8-win-x64"
   },

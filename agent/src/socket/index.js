@@ -4,6 +4,12 @@ import { getAgentData } from '../utils'
 export const initSocket = url => io(url)
 
 export const registerEvents = socket => {
+  socket.on('connect', () => {
+    const args = process.argv
+
+    sendData(socket, 'agent_connected', args.includes('--logout'))
+  })
+
   socket.on('get_agent_data', () => {
     sendData(socket, 'agent_data', getAgentData())
   })

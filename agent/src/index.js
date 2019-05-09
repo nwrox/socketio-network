@@ -5,10 +5,12 @@ loadEnv().then(({ SOCKET_ADDR }) => initSocket(SOCKET_ADDR))
   .then(registerEvents)
   .then(socket => {
     const args = process.argv
-    const data = getAgentData()
+    const evt = args.includes('--logout')
+      ? 'agent_logout'
+      : 'agent_data'
 
-    return args.includes('--logout')
-      ? sendData(socket, 'agent_logout', data.ip_addresses)
-      : sendData(socket, 'agent_data', data)
+    sendData(socket, evt, getAgentData())
   })
-  .catch(console.error)
+  .catch(err => {
+    console.log({ err })
+  })
